@@ -6,10 +6,12 @@ def Perpendicular(v):
 
 def VectorInterpolation_1(v1, v2, ratio=0.5):
     # v1, v2 : N x 2
+    # interpolation of points by finding the midpoint
     return v1 * (1. - ratio) + v2 * ratio
 
 def VectorInterpolation_2(v1, v2, ratio=0.5):
     # v1, v2 : N x 2
+    # TODO
     len1, len2 = np.linalg.norm(v1, ord=2, axis=-1), np.linalg.norm(v2, ord=2, axis=-1)
     raise NotImplementedError
 
@@ -43,7 +45,6 @@ class Morphing:
         dist   = np.absolute(v) * (np.greater_equal(u, 0, dtype=float) * np.less_equal(u, 1, dtype=float)) \
                  + np.linalg.norm(X - P, ord=2, axis=-1) * (np.less(u, 0, dtype=float)) \
                  + np.linalg.norm(X - Q, ord=2, axis=-1) * (np.greater(u, 1, dtype=float))
-        # dist   = np.absolute(v)
         weight = np.power(np.power(np.linalg.norm(Q - P, axis=-1), self.p) / (self.a + dist), self.b)
         Xp     = X[:,:,0,:] + np.sum(D * np.repeat(np.expand_dims(weight, axis=3), 2, axis=-1), axis=2) \
                  / np.repeat(np.expand_dims(np.sum(weight, axis=-1), axis=2), 2, axis=-1)
