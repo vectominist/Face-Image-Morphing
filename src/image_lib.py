@@ -46,3 +46,10 @@ def save_image(filename, image, norm=True):
     image *= 255
     io.imsave(filename, image.astype(np.uint8))
 
+def show_arrows(P, Q, color='r'):
+    for i in range(len(P)):
+        plt.arrow(P[i, 1], 
+                  P[i, 0], 
+                  Q[i, 1] - P[i, 1], 
+                  Q[i, 0] - P[i, 0], 
+                  color=color, width=5)
