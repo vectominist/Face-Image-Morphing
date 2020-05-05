@@ -1,8 +1,17 @@
 import numpy as np
 
-def Perpendicular(V):
-    # V : N x 2
-    return np.stack([V[:,1], -V[:,0]],axis=-1)
+def Perpendicular(v):
+    # v : N x 2
+    return np.stack([v[:,1], -v[:,0]],axis=-1)
+
+def VectorInterpolation_1(v1, v2, ratio=0.5):
+    # v1, v2 : N x 2
+    return v1 * (1. - ratio) + v2 * ratio
+
+def VectorInterpolation_2(v1, v2, ratio=0.5):
+    # v1, v2 : N x 2
+    len1, len2 = np.linalg.norm(v1, ord=2, axis=-1), np.linalg.norm(v2, ord=2, axis=-1)
+    raise NotImplementedError
 
 class Morphing:
     '''
@@ -25,27 +34,40 @@ class Morphing:
             Pp : Feature vector start (source)  N x 2
             Qp : Feature vector end (source)    N x 2
         '''
-        X = np.repeat(np.expand_dims(X, 2), P.shape[0], axis=2) # HxWxNx2
-        u      = np.sum((X - P)*(Q - P), axis=-1) / np.linalg.norm(Q - P, ord=2)**2 # HxWxN
-        v      = np.sum((X - P)*Perpendicular(Q - P), axis=-1) / np.linalg.norm(Q - P, ord=2) # HxWxN
+        X      = np.repeat(np.expand_dims(X, 2), P.shape[0], axis=2) # HxWxNx2
+        u      = np.sum((X - P)*(Q - P), axis=-1) / np.linalg.norm(Q - P, ord=2, axis=-1)**2 # HxWxN
+        v      = np.sum((X - P)*Perpendicular(Q - P), axis=-1) / np.linalg.norm(Q - P, ord=2, axis=-1) # HxWxN
         Xp     = Pp + np.repeat(np.expand_dims(u, axis=-1), 2, axis=-1) * (Qp - Pp) \
-                 + np.repeat(np.expand_dims(v, axis=-1), 2, axis=-1) * Perpendicular(Qp - Pp) / np.linalg.norm(Qp - Pp, ord=2)
+                 + np.repeat(np.expand_dims(v, axis=-1), 2, axis=-1) * Perpendicular(Qp - Pp) / np.repeat(np.linalg.norm(Qp - Pp, ord=2, axis=-1, keepdims=True), 2, axis=-1)
         D      = Xp - X # HxWxNx2
-        # dist   = np.absolute(v) * (np.greater_equal(u, 0, dtype=float) * np.less_equal(u, 1, dtype=float)) \
-        #          + np.linalg.norm(X - P, ord=2, axis=-1) * (np.less(u, 0, dtype=float)) \
-        #          + np.linalg.norm(X - Q, ord=2, axis=-1) * (np.greater(u, 1, dtype=float))
-        dist   = np.absolute(v)
+        dist   = np.absolute(v) * (np.greater_equal(u, 0, dtype=float) * np.less_equal(u, 1, dtype=float)) \
+                 + np.linalg.norm(X - P, ord=2, axis=-1) * (np.less(u, 0, dtype=float)) \
+                 + np.linalg.norm(X - Q, ord=2, axis=-1) * (np.greater(u, 1, dtype=float))
+        # dist   = np.absolute(v)
         weight = np.power(np.power(np.linalg.norm(Q - P, axis=-1), self.p) / (self.a + dist), self.b)
         Xp     = X[:,:,0,:] + np.sum(D * np.repeat(np.expand_dims(weight, axis=3), 2, axis=-1), axis=2) \
                  / np.repeat(np.expand_dims(np.sum(weight, axis=-1), axis=2), 2, axis=-1)
-
+        Xp = np.around(Xp)
+        Xp = Xp.astype(int)
+        Xp[:,:,0] = np.clip(Xp[:,:,0], 0, X.shape[0] - 1)
+        Xp[:,:,1] = np.clip(Xp[:,:,1], 0, X.shape[1] - 1)
         return Xp # HxWx2
 
-    def image_morphing(self, 
+    def TwoImageMorphing(self, 
             img_1, img_2, 
             P1, Q1, P2, Q2, 
             ratio=0.5):
-        # Interpolate features
-
+        assert img_1.shape == img_2.shape
+        H, W = img_1.shape[0], img_1.shape[1]
+        # Interpolate features (destination)
+        Pd, Qd = VectorInterpolation_1(P1, P2, ratio), VectorInterpolation_1(Q1, Q2, ratio)
         # Calculate morphing
-        pass
+        X = np.zeros((H, W, 2), dtype=float)
+        X[:,:,0] = np.expand_dims(np.arange(0, H, dtype=float), axis=1)
+        X[:,:,1] = np.expand_dims(np.arange(0, W, dtype=float), axis=0)
+        Xp_1 = self.MultiFeatMorphing(X.copy(), Pd, Qd, P1, Q1)
+        Xp_2 = self.MultiFeatMorphing(X.copy(), Pd, Qd, P2, Q2)
+        result = img_1[Xp_1[:,:,0],Xp_1[:,:,1],:] * (1. - ratio) + \
+                 img_2[Xp_2[:,:,0],Xp_2[:,:,1],:] * ratio
+        
+        return result
