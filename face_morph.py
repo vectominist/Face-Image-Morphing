@@ -24,13 +24,17 @@ class FaceImageMorphing:
                     1.0 means the output image will be img_2
         '''
         raise NotImplementedError
-        # Image prepocessing
+        # Image prepocessing (filtering/resize)
         # TODO
 
         # Feature extraction
         # TODO
         P1, Q1 = None, None
         P2, Q2 = None, None
+
+        # Image prepocessing (crop face using features)
+        # Note: feature vectors need to be modified after cropping faces
+        # TODO
         
         # Image morphing
         img_out = self.Morph.TwoImageMorphing(img_1, img_2, 

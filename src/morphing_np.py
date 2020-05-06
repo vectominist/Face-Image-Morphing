@@ -4,12 +4,12 @@ def Perpendicular(v):
     # v : N x 2
     return np.stack([v[:,1], -v[:,0]],axis=-1)
 
-def VectorInterpolation_1(v1, v2, ratio=0.5):
+def PointInterpolation_1(v1, v2, ratio=0.5):
     # v1, v2 : N x 2
     # interpolation of points by finding the midpoint
     return v1 * (1. - ratio) + v2 * ratio
 
-def VectorInterpolation_2(v1, v2, ratio=0.5):
+def PointInterpolation_2(v1, v2, ratio=0.5):
     # v1, v2 : N x 2
     # TODO
     len1, len2 = np.linalg.norm(v1, ord=2, axis=-1), np.linalg.norm(v2, ord=2, axis=-1)
@@ -61,7 +61,7 @@ class Morphing:
         assert img_1.shape == img_2.shape
         H, W = img_1.shape[0], img_1.shape[1]
         # Interpolate features (destination)
-        Pd, Qd = VectorInterpolation_1(P1, P2, ratio), VectorInterpolation_1(Q1, Q2, ratio)
+        Pd, Qd = PointInterpolation_1(P1, P2, ratio), PointInterpolation_1(Q1, Q2, ratio)
         # Calculate morphing
         X = np.zeros((H, W, 2), dtype=float)
         X[:,:,0] = np.expand_dims(np.arange(0, H, dtype=float), axis=1)
