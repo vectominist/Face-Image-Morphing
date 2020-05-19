@@ -1,5 +1,5 @@
 import numpy as np
-from skimage import io, filters, color, transform, feature, exposure, external
+from skimage import io, filters, color, transform, feature, exposure
 import matplotlib.pyplot as plt
 
 # Basic Operations
@@ -31,10 +31,7 @@ def resize_to_same(img_1, img_2):
 
 # Basic IO
 def read_image(filename, as_gray=False):
-    if filename.split('.')[-1] in ['tif', 'tiff']:
-        image = external.tifffile.imread(filename)
-    else:
-        image = io.imread(filename, as_gray=as_gray) # numpy array
+    image = io.imread(filename, as_gray=as_gray) # numpy array
     # color image : M x N x 3
     # gray image  : M x N
     # M : height
