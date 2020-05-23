@@ -112,6 +112,7 @@ for (i, rect) in enumerate(rects):
     shape = predictor(gray, rect)
     # get coordinates of features
     shape = shape_to_np(shape)
+    
     # put feature in dict
     get_feature_dict(shape)
 
