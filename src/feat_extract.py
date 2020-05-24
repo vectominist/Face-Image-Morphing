@@ -1,3 +1,6 @@
+import os
+import wget
+import bz2
 from collections import OrderedDict
 import numpy as np
 import cv2
@@ -47,7 +50,7 @@ def get_feature_dict(shape):
     print(facial_features_cordinates)
     return facial_features_cordinates
 
-def show_feature_crcles(image, shape):
+def show_feature_circles(image, shape):
     """
     image: image read with cv2.imread()
     shape: feature coordinates from shape_to_np()
@@ -91,6 +94,15 @@ class FaceFeatureExtractor:
     '''
     def __init__(self, shape_predictor):
         self.shape_predictor = shape_predictor
+        if not os.path.isfile(shape_predictor):
+            # If cannot find shape_predictor, download it from dlib.net
+            url = 'http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
+            download_name = wget.download(url)
+            zipfile = bz2.BZ2File(download_name) # open the file
+            data = zipfile.read() # get the decompressed data
+            newfilepath = download_name[:-4] # assuming the filepath ends with .bz2
+            open(newfilepath, 'wb').write(data) # write a uncompressed file
+            self.shape_predictor = newfilepath
     
     def ExtractFeature(self, image_path):
         print('Initializing dlib')
@@ -104,7 +116,7 @@ class FaceFeatureExtractor:
 
         print('Detecting face features')
         rects = detector(gray, 1)
-        for (i, rect) in enumerate(rects):
+        for i, rect in enumerate(rects):
             shape = predictor(gray, rect)
             # get coordinates of features
             shape = shape_to_np(shape)
@@ -116,9 +128,13 @@ class FaceFeatureExtractor:
             image, shape = crop_to_face(image, shape)
 
             # show feature circles
-            image = show_feature_crcles(image, shape)
+            image_with_feat = show_feature_circles(image, shape)
 
-        # TODO : return extracted features
+            # assume only one face is in the image
+            break
+
+        return shape, image
+
 
 if __name__ == '__main__':
     # construct the argument parser and parse the arguments
@@ -150,7 +166,7 @@ if __name__ == '__main__':
         image, shape = crop_to_face(image, shape)
 
         # show feature circles
-        image = show_feature_crcles(image, shape)
+        image = show_feature_circles(image, shape)
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     show_image(image)
