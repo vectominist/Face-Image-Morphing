@@ -66,11 +66,11 @@ def show_feature_circles(image, shape):
     return image
 
 def crop_to_face(image, shape):
-    """
+    '''
     image: image read with cv2.imread()
     shape: feature coordinates from shape_to_np()
     return cropped image & modified coordinates
-    """
+    '''
     # crop image to only the face
     (left, top) = shape[0]
     (right, bottom) = shape[0]
