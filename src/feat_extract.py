@@ -1,6 +1,4 @@
 import os
-import wget
-import bz2
 from collections import OrderedDict
 import numpy as np
 import cv2
@@ -95,11 +93,14 @@ def crop_to_face(image, shape):
 
 class FaceFeatureExtractor:
     '''
-        Description TODO
+        A facial landmark detector implemented with OpenCV 
+        and dlib.
     '''
     def __init__(self, shape_predictor):
         self.shape_predictor = shape_predictor
         if not os.path.isfile(shape_predictor):
+            import wget
+            import bz2
             # If cannot find shape_predictor, download it from dlib.net
             url = 'http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
             download_name = wget.download(url)

@@ -20,7 +20,7 @@ class Morphing:
         An implementation of the morphing algorithm from the 
         paper "Feature-Based Image Metamorphosis".
     '''
-    def __init__(self, a=0.1, b=1.0, p=0.5):
+    def __init__(self, a=0.1, b=2.0, p=0.5):
         self.a = a
         self.b = b # recommended range: [0.5, 2]
         self.p = p # recommended range: [0  , 1]
