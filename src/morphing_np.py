@@ -71,4 +71,4 @@ class Morphing:
         result = img_1[Xp_1[:,:,0],Xp_1[:,:,1],:] * (1. - ratio) + \
                  img_2[Xp_2[:,:,0],Xp_2[:,:,1],:] * ratio
         
-        return result
+        return result, Pd, Qd
