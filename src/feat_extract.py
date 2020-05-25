@@ -25,21 +25,21 @@ FACIAL_LANDMARKS_INDEXES = OrderedDict([
 ])
 
 def shape_to_np(shape, dtype="float"):
-    """
+    '''
     shape: feature coordinates from predictor
     return np.array of coordinates [[x, y]...]
-    """
+    '''
     coords = np.zeros((68, 2), dtype=dtype)
     for i in range(68):
         coords[i] = (shape.part(i).x, shape.part(i).y)
     return coords
 
 def get_feature_dict(shape):
-    """
+    '''
     shape: feature coordinates from shape_to_np()
     return dict of face feature names and coordinates
     facial_features_cordinates = { 'name': array[(coordinates)...] }
-    """
+    '''
     facial_features_cordinates = {}
     # loop over the facial landmark regions individually
     for (i, name) in enumerate(FACIAL_LANDMARKS_INDEXES.keys()):
@@ -53,11 +53,11 @@ def get_feature_dict(shape):
     return facial_features_cordinates
 
 def show_feature_circles(image, shape):
-    """
+    '''
     image: image read with cv2.imread()
     shape: feature coordinates from shape_to_np()
     return image with feature circles
-    """
+    '''
     # show feature circles
     for i, (x, y) in enumerate(shape):
         cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
@@ -95,7 +95,9 @@ def crop_to_face(image, shape):
 
 class FaceFeatureExtractor:
     '''
-        Description TODO
+        Extract face features with dlib
+        Turn features into dictionary of coordinates
+        Crop image only with the part with the face
     '''
     def __init__(self, shape_predictor):
         self.shape_predictor = shape_predictor
