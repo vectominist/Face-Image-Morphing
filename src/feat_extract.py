@@ -23,21 +23,21 @@ FACIAL_LANDMARKS_INDEXES = OrderedDict([
 ])
 
 def shape_to_np(shape, dtype="float"):
-    """
+    '''
     shape: feature coordinates from predictor
     return np.array of coordinates [[x, y]...]
-    """
+    '''
     coords = np.zeros((68, 2), dtype=dtype)
     for i in range(68):
         coords[i] = (shape.part(i).x, shape.part(i).y)
     return coords
 
 def get_feature_dict(shape):
-    """
+    '''
     shape: feature coordinates from shape_to_np()
     return dict of face feature names and coordinates
     facial_features_cordinates = { 'name': array[(coordinates)...] }
-    """
+    '''
     facial_features_cordinates = {}
     # loop over the facial landmark regions individually
     for (i, name) in enumerate(FACIAL_LANDMARKS_INDEXES.keys()):
@@ -51,11 +51,11 @@ def get_feature_dict(shape):
     return facial_features_cordinates
 
 def show_feature_circles(image, shape):
-    """
+    '''
     image: image read with cv2.imread()
     shape: feature coordinates from shape_to_np()
     return image with feature circles
-    """
+    '''
     # show feature circles
     for i, (x, y) in enumerate(shape):
         cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
@@ -64,11 +64,11 @@ def show_feature_circles(image, shape):
     return image
 
 def crop_to_face(image, shape):
-    """
+    '''
     image: image read with cv2.imread()
     shape: feature coordinates from shape_to_np()
     return cropped image & modified coordinates
-    """
+    '''
     # crop image to only the face
     (left, top) = shape[0]
     (right, bottom) = shape[0]
@@ -93,8 +93,9 @@ def crop_to_face(image, shape):
 
 class FaceFeatureExtractor:
     '''
-        A facial landmark detector implemented with OpenCV 
-        and dlib.
+        Extract face features with dlib
+        Turn features into dictionary of coordinates
+        Crop image only with the part with the face
     '''
     def __init__(self, shape_predictor):
         self.shape_predictor = shape_predictor
@@ -136,7 +137,8 @@ class FaceFeatureExtractor:
 
             # assume only one face is in the image
             break
-
+        
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         return image, shape
 
 
@@ -147,30 +149,11 @@ if __name__ == '__main__':
     ap.add_argument("-i", "--image", required=True, help="path to input image")
     args = vars(ap.parse_args())
 
-    print('Initializing dlib')
-    detector = dlib.get_frontal_face_detector()
-    predictor = dlib.shape_predictor(args["shape_predictor"])
+    model = FaceFeatureExtractor(args['shape_predictor'])
+    image, shape = model.ExtractFeature(args['image'])
 
-    print('Reading image')
-    image = cv2.imread(args["image"])
-    image = imutils.resize(image, width=800)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    print('Detecting face features')
-    rects = detector(gray, 1)
-    for (i, rect) in enumerate(rects):
-        shape = predictor(gray, rect)
-        # get coordinates of features
-        shape = shape_to_np(shape)
-        
-        # put feature in dict
-        get_feature_dict(shape)
-
-        # crop image to only the face
-        image, shape = crop_to_face(image, shape)
-
-        # show feature circles
-        image = show_feature_circles(image, shape)
+    # show feature circles
+    image = show_feature_circles(image, shape)
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     show_image(image)
