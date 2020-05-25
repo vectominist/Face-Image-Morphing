@@ -12,7 +12,10 @@ python3 main_3.py \
     --image_2 $img_2 \
     --image_3 $img_3 \
     --shape-predictor "$shape_pr" \
-    --ratio_1 0.3 \
-    --ratio_2 0.4 \
+    --ratio_1 0.429 \
+    --ratio_2 0.3 \
     --output $out_path \
     --name $name
+
+# 0.5 : 0.25 : 0.25 -> 0.333 / 0.25
+# 0.4 : 0.3  : 0.3  -> 0.429 / 0.3

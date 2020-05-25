@@ -67,3 +67,20 @@ def show_arrows(P, Q, color='r'):
                   Q[i, 1] - P[i, 1], 
                   Q[i, 0] - P[i, 0], 
                   color=color, width=1)
+
+# Shade
+def gaussian_shade(image, scale):
+    H, W = image.shape[0], image.shape[1]
+    X = np.zeros((H, W, 2), dtype=float)
+    X[:,:,0] = np.expand_dims(np.arange(0, H, dtype=float), axis=1)
+    X[:,:,1] = np.expand_dims(np.arange(0, W, dtype=float), axis=0)
+    X = (X[:,:,0] - H / 2.)**2 + (X[:,:,1] - W / 2.)**2
+    return image * np.expand_dims(np.exp(-0.5 * X / (scale * H / 2.)**2), axis=2)
+
+def butterworth_shade(image, scale, n=3):
+    H, W = image.shape[0], image.shape[1]
+    X = np.zeros((H, W, 2), dtype=float)
+    X[:,:,0] = np.expand_dims(np.arange(0, H, dtype=float), axis=1)
+    X[:,:,1] = np.expand_dims(np.arange(0, W, dtype=float), axis=0)
+    X = (X[:,:,0] - H / 2.)**2 + (X[:,:,1] - W / 2.)**2
+    return image * np.expand_dims(1. / (1. + (X / (scale * H / 2.)**2)**n), axis=2)

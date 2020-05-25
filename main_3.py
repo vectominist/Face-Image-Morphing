@@ -1,7 +1,7 @@
 import argparse
 from os.path import join
 from face_morph import FaceImageMorphing
-from src.image_lib import show_image, show_arrows, save_image
+from src.image_lib import show_image, show_arrows, save_image, gaussian_shade, butterworth_shade
 import matplotlib.pyplot as plt
 
 # Arguments
@@ -30,6 +30,8 @@ img_1, img_2, img_3, img_out, P1, Q1, P2, Q2, P3, Q3 = \
                           paras['image_3'], 
                           paras['ratio_1'], 
                           paras['ratio_2'])
+
+img_out = butterworth_shade(img_out, 1.)
 
 # Show results
 fig=plt.figure(figsize=(16, 4))
