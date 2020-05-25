@@ -51,7 +51,7 @@ def show_image(image, mode=None):
         plt.imshow(image)
     elif mode == 'gray':
         plt.imshow(image, cmap=plt.cm.gray)
-    plt.show()
+    # plt.show()
     # plt.clf()
 
 def save_image(filename, image, norm=True):
@@ -66,4 +66,4 @@ def show_arrows(P, Q, color='r'):
                   P[i, 0], 
                   Q[i, 1] - P[i, 1], 
                   Q[i, 0] - P[i, 0], 
-                  color=color, width=5)
+                  color=color, width=1)

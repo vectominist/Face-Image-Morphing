@@ -13,16 +13,18 @@ from src.image_lib import read_image, show_image
 # define a dictionary that maps the indexes of the facial
 # landmarks to specific face regions
 FACIAL_LANDMARKS_INDEXES = OrderedDict([
-    ("Mouth", (48, 68)),
+    ("Out_Mouth", (48, 60)),
+    ("In_Mouth", (60, 68)),
     ("Right_Eyebrow", (17, 22)),
     ("Left_Eyebrow", (22, 27)),
     ("Right_Eye", (36, 42)),
     ("Left_Eye", (42, 48)),
-    ("Nose", (27, 35)),
+    ("Up_Nose", (27, 31)),
+    ("Down_Nose", (31, 36)),
     ("Jaw", (0, 17))
 ])
 
-def shape_to_np(shape, dtype="int"):
+def shape_to_np(shape, dtype="float"):
     """
     shape: feature coordinates from predictor
     return np.array of coordinates [[x, y]...]
@@ -47,7 +49,7 @@ def get_feature_dict(shape):
         pts = shape[j:k]
         facial_features_cordinates[name] = pts
 
-    print(facial_features_cordinates)
+    # print(facial_features_cordinates)
     return facial_features_cordinates
 
 def show_feature_circles(image, shape):
@@ -74,18 +76,21 @@ def crop_to_face(image, shape):
     (right, bottom) = shape[0]
     
     # find border of the face
-    for (x, y) in shape:
-        if x < left: left = x
-        if x > right: right = x
-        if y < top: top = y
-        if y > bottom: bottom = y
+    left   = int(np.min(shape[:,0]))
+    right  = int(np.max(shape[:,0]))
+    top    = int(np.min(shape[:,1]))
+    bottom = int(np.max(shape[:,1]))
 
-    image = image[top-20:bottom+20, left-20:right+20]
+    width  =  right - left
+    height = bottom - top
+    size   = int(max(width, height) * 1.)
+    w_mid  = (left + right) // 2
+    h_mid  = (top + bottom) // 2
+    image = image[h_mid - size // 2: h_mid + size // 2 + 1, w_mid - size // 2: w_mid + size // 2 + 1]
     
-    for i in range(68):
-        shape[i][0] = shape[i][0] - (left-20)
-        shape[i][1] = shape[i][1] - (top-20)
-
+    shape[:, 0] -= w_mid - size // 2
+    shape[:, 1] -= h_mid - size // 2
+    
     return image, shape
 
 class FaceFeatureExtractor:
@@ -111,6 +116,7 @@ class FaceFeatureExtractor:
 
         print('Reading image')
         image = cv2.imread(image_path)
+        assert image is not None
         image = imutils.resize(image, width=800)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -120,20 +126,17 @@ class FaceFeatureExtractor:
             shape = predictor(gray, rect)
             # get coordinates of features
             shape = shape_to_np(shape)
-            
-            # put feature in dict
-            get_feature_dict(shape)
 
             # crop image to only the face
             image, shape = crop_to_face(image, shape)
 
             # show feature circles
-            image_with_feat = show_feature_circles(image, shape)
+            # image_with_feat = show_feature_circles(image, shape.astype(int))
 
             # assume only one face is in the image
             break
 
-        return shape, image
+        return image, shape
 
 
 if __name__ == '__main__':
