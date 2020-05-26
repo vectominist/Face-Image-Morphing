@@ -17,6 +17,7 @@ parser.add_argument('-b',  '--b', default=1.0, type=float, help='morphing hyper-
 parser.add_argument('-p',  '--p', default=0.5, type=float, help='morphing hyper-parameter p')
 parser.add_argument('-o',  '--output', default=None, type=str, help='output image directory')
 parser.add_argument('-n',  '--name', default=None, type=str, help='output image file name')
+parser.add_argument('-s',  '--save', default=False, action='store_true', help='output image file name')
 paras = vars(parser.parse_args())
 
 # E.g. 
@@ -50,13 +51,18 @@ plt.show()
 
 # Save image
 if paras['output'] is not None and len(paras['output']) > 0:
-    name_1 = '.'.join(paras['image_1'].split('/')[-1].split('.')[:-1]) + '_crop.png'
-    name_2 = '.'.join(paras['image_2'].split('/')[-1].split('.')[:-1]) + '_crop.png'
-    name_3 = '.'.join(paras['image_3'].split('/')[-1].split('.')[:-1]) + '_crop.png'
-    save_image(join(paras['output'], name_1), img_1)
-    save_image(join(paras['output'], name_2), img_2)
-    save_image(join(paras['output'], name_3), img_3)
+    # name_1 = '.'.join(paras['image_1'].split('/')[-1].split('.')[:-1]) + '_crop.png'
+    # name_2 = '.'.join(paras['image_2'].split('/')[-1].split('.')[:-1]) + '_crop.png'
+    # name_3 = '.'.join(paras['image_3'].split('/')[-1].split('.')[:-1]) + '_crop.png'
     name_out = 'morph_{}.png'.format(str(paras['ratio'])) \
                 if paras['name'] is None and len(paras['name']) == 0 \
                 else paras['name']
+    name_1 = '.'.join(name_out.split('.')[:-1]) + '_c1.png'
+    name_2 = '.'.join(name_out.split('.')[:-1]) + '_c2.png'
+    name_3 = '.'.join(name_out.split('.')[:-1]) + '_c3.png'
+
+    if paras['save']:
+        save_image(join(paras['output'], name_1), img_1)
+        save_image(join(paras['output'], name_2), img_2)
+        save_image(join(paras['output'], name_3), img_3)
     save_image(join(paras['output'], name_out), img_out)

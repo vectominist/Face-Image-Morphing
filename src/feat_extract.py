@@ -112,17 +112,17 @@ class FaceFeatureExtractor:
             self.shape_predictor = newfilepath
     
     def ExtractFeature(self, image_path):
-        print('Initializing dlib')
+        # print('Initializing dlib')
         detector = dlib.get_frontal_face_detector()
         predictor = dlib.shape_predictor(self.shape_predictor)
 
-        print('Reading image')
+        # print('Reading image')
         image = cv2.imread(image_path)
         assert image is not None
         image = imutils.resize(image, width=800)
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-        print('Detecting face features')
+        # print('Detecting face features')
         rects = detector(gray, 1)
         for i, rect in enumerate(rects):
             shape = predictor(gray, rect)
