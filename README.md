@@ -8,7 +8,7 @@ While the 2D image morphing program is an implementation of the paper **Feature-
 
 ## Instructions
 ### Step 1. Download Facial Landmark Detector
-Download and decompress the facial landmark detector [here](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2).
+Download and decompress the facial landmark detector model from the [dlib website](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2).
 
 ### Step 2. Modify Scripts
 Modify the variable `shape_pr` in scripts `run.sh` or `run3.sh` to the path to the facial landmark detector on your computer.
@@ -25,7 +25,7 @@ Note that the `ratio` is the interpolation ratio between the two images. `ratio 
 bash run3.sh <image 1> <image 2> <image 3> <directory for output images> [name of the morphed image]
 ```
 The morphing ratio of the three images is set to 40%:30%:30% (`ratio_1 = 0.429` and `ratio_2 = 0.3`).
-But you can also modify the ratios to (1 - a - b + ab):a:b by setting `ratio_1 = a = b / (1 - b)` and `ratio_2 = b`.
+But you can also modify the ratios to (1 - a - b + ab) : a : b by setting `ratio_1 = a = b / (1 - b)` and `ratio_2 = b` in the script `run3.sh`.
 
 ### Other Methods
 #### Feature Extraction Class
@@ -34,8 +34,8 @@ The only parameter required is the path to the facial landmark detector model.
 You may modify the `crop_to_face` function in the .py file to crop to your desired area.
 
 #### 2D Image Morphing Class
-This class is in `src/feat_extract.py` called `Morphing`.
-There are three optional parameters: `a`, `b`, and `p`, controling the weighting for each line shown in the original paper<sup>[1](#Reference)</sup>.
+This class is in `src/morphing_np.py` called `Morphing`.
+There are three optional parameters: `a`, `b`, and `p`, controlling the weighting for each line shown in the original paper<sup>[1](#Reference)</sup>.
 
 ## Reference
 1. [T. Beier and S. Neely, "Feature-based image metamorphosis", SIGGRAPH, 1992](https://www.cs.princeton.edu/courses/archive/fall00/cs426/papers/beier92.pdf)
