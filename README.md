@@ -1,6 +1,10 @@
 # Face Image Morphing
 Final project of Interactive Computer Graphics 2020 Spring, NTU CSIE
 
+<p align="center">
+  <img src="example/sample_group.png" width="640" height="200">
+</p>
+
 ## Introduction
 This repository is a simple program for face image morphing implemented in python3.
 The program can be split into two parts: face feature extraction and 2D image morphing. For the feature extraction part, we used [OpenCV](https://github.com/skvark/opencv-python) and [dlib](https://github.com/davisking/dlib) packages following the instructions from an [article](https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/).
