@@ -45,20 +45,12 @@ class FaceImageMorphing:
         img_1, shape_1 = self.FaceFeatureExtractor.ExtractFeature(img_1_path)
         img_2, shape_2 = self.FaceFeatureExtractor.ExtractFeature(img_2_path)
 
-        img_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2RGB)
-        img_2 = cv2.cvtColor(img_2, cv2.COLOR_BGR2RGB)
-
         # Resize the two images to the same (both images were cropped to square already)
         size_max = max(img_1.shape[0], img_2.shape[0])
         shape_1 *= size_max / img_1.shape[0]
         img_1 = resize(img_1, size_max, size_max)
         shape_2 *= size_max / img_2.shape[0]
         img_2 = resize(img_2, size_max, size_max)
-        
-        if img_1.max() > 1.:
-            img_1 = img_1.astype(float) / 255.
-        if img_2.max() > 1.:
-            img_2 = img_2.astype(float) / 255.
 
         # Process feature
         P1, Q1 = FeaturePostprocess(shape_1)
@@ -85,10 +77,6 @@ class FaceImageMorphing:
         img_2, shape_2 = self.FaceFeatureExtractor.ExtractFeature(img_2_path)
         img_3, shape_3 = self.FaceFeatureExtractor.ExtractFeature(img_3_path)
 
-        img_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2RGB)
-        img_2 = cv2.cvtColor(img_2, cv2.COLOR_BGR2RGB)
-        img_3 = cv2.cvtColor(img_3, cv2.COLOR_BGR2RGB)
-
         # Resize the two images to the same (both images were cropped to square already)
         size_max = max(img_1.shape[0], max(img_2.shape[0], img_3.shape[0]))
         shape_1 *= size_max / img_1.shape[0]
@@ -97,13 +85,6 @@ class FaceImageMorphing:
         img_2 = resize(img_2, size_max, size_max)
         shape_3 *= size_max / img_3.shape[0]
         img_3 = resize(img_3, size_max, size_max)
-        
-        if img_1.max() > 1.:
-            img_1 = img_1.astype(float) / 255.
-        if img_2.max() > 1.:
-            img_2 = img_2.astype(float) / 255.
-        if img_3.max() > 1.:
-            img_3 = img_3.astype(float) / 255.
         
         # Process feature
         P1, Q1 = FeaturePostprocess(shape_1)

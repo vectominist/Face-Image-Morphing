@@ -15,7 +15,10 @@ python3 main_3.py \
     --ratio_1 0.429 \
     --ratio_2 0.3 \
     --output $out_path \
-    --name $name
+    --name $name \
+    --a 0.01 \
+    --b 2.0 \
+    --p 0.5
 
 # 0.5 : 0.25 : 0.25 -> 0.333 / 0.25
 # 0.4 : 0.3  : 0.3  -> 0.429 / 0.3

@@ -6,7 +6,7 @@ import argparse
 import dlib
 import imutils
 
-from src.image_lib import read_image, show_image
+from src.image_lib import show_image
 
 # define a dictionary that maps the indexes of the facial
 # landmarks to specific face regions
