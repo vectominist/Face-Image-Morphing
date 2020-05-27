@@ -7,6 +7,7 @@ import dlib
 import imutils
 
 from src.image_lib import show_image
+import matplotlib.pyplot as plt
 
 # define a dictionary that maps the indexes of the facial
 # landmarks to specific face regions
@@ -133,7 +134,9 @@ class FaceFeatureExtractor:
             image, shape = crop_to_face(image, shape)
 
             # show feature circles
-            # image_with_feat = show_feature_circles(image, shape.astype(int))
+            image_with_feat = show_feature_circles(image.copy(), shape.astype(int))
+            # show_image(cv2.cvtColor(image_with_feat, cv2.COLOR_BGR2RGB))
+            # plt.show()
 
             # assume only one face is in the image
             break

@@ -34,7 +34,8 @@ class Morphing:
         u      = np.sum((X - P)*(Q - P), axis=-1) / np.linalg.norm(Q - P, ord=2, axis=-1)**2 # HxWxN
         v      = np.sum((X - P)*Perpendicular(Q - P), axis=-1) / np.linalg.norm(Q - P, ord=2, axis=-1) # HxWxN
         Xp     = Pp + np.repeat(np.expand_dims(u, axis=-1), 2, axis=-1) * (Qp - Pp) \
-                 + np.repeat(np.expand_dims(v, axis=-1), 2, axis=-1) * Perpendicular(Qp - Pp) / np.repeat(np.linalg.norm(Qp - Pp, ord=2, axis=-1, keepdims=True), 2, axis=-1)
+                 + np.repeat(np.expand_dims(v, axis=-1), 2, axis=-1) \
+                             * Perpendicular(Qp - Pp) / np.repeat(np.linalg.norm(Qp - Pp, ord=2, axis=-1, keepdims=True), 2, axis=-1)
         D      = Xp - X # HxWxNx2
         dist   = np.absolute(v) * (np.greater_equal(u, 0, dtype=float) * np.less_equal(u, 1, dtype=float)) \
                  + np.linalg.norm(X - P, ord=2, axis=-1) * (np.less(u, 0, dtype=float)) \
