@@ -45,11 +45,13 @@ We conducted experiments for verifying whether people are attracted to people wh
 <p align="center">
   <img src="example/experiment.png" width="915" height="364">
 </p>
+
 The `generate.py` generate images for the experiment, it can be used as follow:  
 
 ```
 python3 generate.py <image of tester> <gender m/f> <image dataset> <list of images> <output directory>
 ```
+The images in the image dataset must be named with beginning of `m` or `f` for male or female, respectively.
 The output images will be stored at the specified directory.
 
 ## Reference
