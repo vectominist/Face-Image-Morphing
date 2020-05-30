@@ -41,6 +41,17 @@ You may modify the `crop_to_face` function in the .py file to crop to your desir
 This class is in `src/morphing_np.py` called `Morphing`.
 There are three optional parameters: `a`, `b`, and `p`, controlling the weighting for each line shown in the original paper<sup>[1](#Reference)</sup>.
 
+## Experiments
+We conducted experiments for verifying whether people are attracted to people who look like them.
+<p align="center">
+  <img src="example/experiment.png" width="915" height="364">
+</p>
+The `generate.py` generate images for the experiment, it can be used as follow:
+```shell=zsh
+python3 generate.py <image of tester> <gender m/f> <image dataset> <list of images> <output directory>
+```
+The output images will be stored at the specified directory.
+
 ## Reference
 1. [T. Beier and S. Neely, "Feature-based image metamorphosis", SIGGRAPH, 1992](https://www.cs.princeton.edu/courses/archive/fall00/cs426/papers/beier92.pdf)
 
