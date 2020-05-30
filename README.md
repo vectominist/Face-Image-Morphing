@@ -28,8 +28,7 @@ Note that the `ratio` is the interpolation ratio between the two images. `ratio 
 ```
 bash run3.sh <image 1> <image 2> <image 3> <directory for output images> [name of the morphed image]
 ```
-The morphing ratio of the three images is set to 40%:30%:30% (`ratio_1 = 0.429` and `ratio_2 = 0.3`).
-But you can also modify the ratios to (1 - a - b + ab) : a : b by setting `ratio_1 = a = b / (1 - b)` and `ratio_2 = b` in the script `run3.sh`.
+The morphing ratio of the three images is set to 33%:33%:33% (`ratio_1 = 0.5` and `ratio_2 = 0.333`).
 
 ### Other Methods
 #### Feature Extraction Class
@@ -46,8 +45,9 @@ We conducted experiments for verifying whether people are attracted to people wh
 <p align="center">
   <img src="example/experiment.png" width="915" height="364">
 </p>
-The `generate.py` generate images for the experiment, it can be used as follow:
-```shell=zsh
+The `generate.py` generate images for the experiment, it can be used as follow:  
+
+```
 python3 generate.py <image of tester> <gender m/f> <image dataset> <list of images> <output directory>
 ```
 The output images will be stored at the specified directory.
