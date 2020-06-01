@@ -6,7 +6,7 @@ Final project of Interactive Computer Graphics 2020 Spring, NTU CSIE
 </p>
 
 <p align="center">
-  <img src="example/sample_multi.gif" width="400" height="400">
+  <img src="example/sample_multi.gif" width="200" height="200">
 </p>
 
 ## Introduction
