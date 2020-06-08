@@ -91,6 +91,9 @@ class FaceImageMorphing:
         P2, Q2 = FeaturePostprocess(shape_2)
         P3, Q3 = FeaturePostprocess(shape_3)
 
+        # Calculate ratio:
+        ratio_1, ratio_2 = ratio_2 / (ratio_1 + ratio_2), (1. - ratio_1 - ratio_2) / (ratio_1 + ratio_2)
+
         # Image morphing
         img_out, Pd, Qd = self.Morph.TwoImageMorphing(img_1, img_2, 
                                               P1, Q1, P2, Q2, ratio_1)

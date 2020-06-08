@@ -9,6 +9,7 @@ from src.image_lib import read_image, resize, save_image
 DATA_NUM = [15, 15] # number of image data (0: male, 1: female)
 IMG_SIZE = 200
 OUTPUT_NUM = 5
+SAVE_OPT = ''
 
 def read_list(filename):
     with open(filename, 'r') as fp:
@@ -63,7 +64,8 @@ if __name__ == '__main__':
                         join(img_dir, all_list[other_g_idx][other_gender_list[i]]),
                         join(img_dir, all_list[other_g_idx][other_gender_list[i+1]]),
                         out_dir,
-                        name])
+                        name,
+                        SAVE_OPT])
         new_img = read_image(join(out_dir, name))
         tar_img.append(resize(new_img, IMG_SIZE, IMG_SIZE))
     
@@ -77,7 +79,8 @@ if __name__ == '__main__':
                             join(img_dir, all_list[other_g_idx][other_gender_list[i//(OUTPUT_NUM - 1)*2]]),
                             join(img_dir, all_list[other_g_idx][other_gender_list[i//(OUTPUT_NUM - 1)*2+1]]),
                             out_dir,
-                            name])
+                            name,
+                            SAVE_OPT])
             new_img = read_image(join(out_dir, name))
             com_img[i // (OUTPUT_NUM - 1)].append(resize(new_img, IMG_SIZE, IMG_SIZE))
     
@@ -88,8 +91,6 @@ if __name__ == '__main__':
     test_1 = np.concatenate(test_1, axis=1)
     test_2 = np.concatenate(test_2, axis=1)
     test_3 = np.concatenate(test_3, axis=1)
-    # test_2 = np.concatenate([com_img[1][0], tar_img[1], com_img[1][1]], axis=1)
-    # test_3 = np.concatenate([com_img[2][0], com_img[2][1], tar_img[2]], axis=1)
     
     save_image(join(out_dir, 'test_1.png'), test_1)
     save_image(join(out_dir, 'test_2.png'), test_2)

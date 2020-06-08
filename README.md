@@ -32,7 +32,7 @@ Note that the `ratio` is the interpolation ratio between the two images. `ratio 
 ```
 bash run3.sh <image 1> <image 2> <image 3> <directory for output images> [name of the morphed image]
 ```
-The morphing ratio of the three images is set to 33%:33%:33% (`ratio_1 = 0.5` and `ratio_2 = 0.333`).
+The morphing ratio of the three images is set to 33%:33%:33% (`ratio_1 = 0.333` and `ratio_2 = 0.333`). You may set the ratio of the images, if the three images have a interpolation ratio of `a:b:(1-a-b)`, then change the arguments `ratio_1` and `ratio_2` to `a` and `b`, respectively.
 
 ### Other Methods
 #### Feature Extraction Class
