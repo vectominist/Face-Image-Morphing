@@ -12,7 +12,7 @@ Final project of Interactive Computer Graphics 2020 Spring, NTU CSIE
 ## Introduction
 This repository is a simple program for face image morphing implemented in python3.
 The program can be split into two parts: face feature extraction and 2D image morphing. For the feature extraction part, we used [OpenCV](https://github.com/skvark/opencv-python) and [dlib](https://github.com/davisking/dlib) packages following the instructions from an [article](https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/).
-While the 2D image morphing program is an implementation of the paper **Feature-based image metamorphosis**<sup>[1](#Reference)</sup> in [Numpy](https://numpy.org/).
+While the 2D image morphing program is an implementation of the paper **Feature-based image metamorphosis**<sup>[1](#Reference)</sup> in [NumPy](https://numpy.org/).
 
 ## Instructions
 ### Step 1. Download Facial Landmark Detector
