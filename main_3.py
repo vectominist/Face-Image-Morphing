@@ -4,6 +4,8 @@ from face_morph import FaceImageMorphing
 from src.image_lib import show_image, show_arrows, save_image, gaussian_shade, butterworth_shade
 import matplotlib.pyplot as plt
 
+SHOW_RESULTS = False
+
 # Arguments
 parser = argparse.ArgumentParser(description='Face image morphing program.')
 parser.add_argument('-i1', '--image_1', type=str, help='Path to the first image.')
@@ -35,19 +37,20 @@ img_1, img_2, img_3, img_out, P1, Q1, P2, Q2, P3, Q3 = \
 img_out = butterworth_shade(img_out, 1.)
 
 # Show results
-fig=plt.figure(figsize=(16, 4))
-fig.add_subplot(1, 4, 1)
-show_arrows(P1, Q1, 'r')
-show_image(img_1)
-fig.add_subplot(1, 4, 2)
-show_arrows(P2, Q2, 'r')
-show_image(img_2)
-fig.add_subplot(1, 4, 3)
-show_arrows(P3, Q3, 'r')
-show_image(img_3)
-fig.add_subplot(1, 4, 4)
-show_image(img_out)
-# plt.show()
+if SHOW_RESULTS:
+    fig=plt.figure(figsize=(16, 4))
+    fig.add_subplot(1, 4, 1)
+    show_arrows(P1, Q1, 'r')
+    show_image(img_1)
+    fig.add_subplot(1, 4, 2)
+    show_arrows(P2, Q2, 'r')
+    show_image(img_2)
+    fig.add_subplot(1, 4, 3)
+    show_arrows(P3, Q3, 'r')
+    show_image(img_3)
+    fig.add_subplot(1, 4, 4)
+    show_image(img_out)
+    plt.show()
 
 # Save image
 if paras['output'] is not None and len(paras['output']) > 0:

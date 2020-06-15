@@ -5,10 +5,14 @@ Final project of Interactive Computer Graphics 2020 Spring, NTU CSIE
   <img src="example/sample_group.png" width="800" height="250">
 </p>
 
+<p align="center">
+  <img src="example/sample_multi.gif" width="200" height="200">
+</p>
+
 ## Introduction
 This repository is a simple program for face image morphing implemented in python3.
 The program can be split into two parts: face feature extraction and 2D image morphing. For the feature extraction part, we used [OpenCV](https://github.com/skvark/opencv-python) and [dlib](https://github.com/davisking/dlib) packages following the instructions from an [article](https://www.pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/).
-While the 2D image morphing program is an implementation of the paper **Feature-based image metamorphosis**<sup>[1](#Reference)</sup> in [Numpy](https://numpy.org/).
+While the 2D image morphing program is an implementation of the paper **Feature-based image metamorphosis**<sup>[1](#Reference)</sup> in [NumPy](https://numpy.org/).
 
 ## Instructions
 ### Step 1. Download Facial Landmark Detector
@@ -28,7 +32,7 @@ Note that the `ratio` is the interpolation ratio between the two images. `ratio 
 ```
 bash run3.sh <image 1> <image 2> <image 3> <directory for output images> [name of the morphed image]
 ```
-The morphing ratio of the three images is set to 33%:33%:33% (`ratio_1 = 0.5` and `ratio_2 = 0.333`).
+The morphing ratio of the three images is set to 33%:33%:33% (`ratio_1 = 0.333` and `ratio_2 = 0.333`). You may set the ratio of the images, if the three images have a interpolation ratio of `a:b:(1-a-b)`, then change the arguments `ratio_1` and `ratio_2` to `a` and `b`, respectively.
 
 ### Other Methods
 #### Feature Extraction Class
@@ -45,11 +49,13 @@ We conducted experiments for verifying whether people are attracted to people wh
 <p align="center">
   <img src="example/experiment.png" width="915" height="364">
 </p>
+
 The `generate.py` generate images for the experiment, it can be used as follow:  
 
 ```
 python3 generate.py <image of tester> <gender m/f> <image dataset> <list of images> <output directory>
 ```
+The images in the image dataset must be named with beginning of `m` or `f` for male or female, respectively.
 The output images will be stored at the specified directory.
 
 ## Reference

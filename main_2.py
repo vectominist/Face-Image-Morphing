@@ -4,6 +4,8 @@ from face_morph import FaceImageMorphing
 from src.image_lib import show_image, show_arrows, save_image, butterworth_shade
 import matplotlib.pyplot as plt
 
+SHOW_RESULTS = False
+
 # Arguments
 parser = argparse.ArgumentParser(description='Face image morphing program.')
 parser.add_argument('-i1', '--image_1', type=str, help='Path to the first image.')
@@ -28,16 +30,17 @@ img_1, img_2, img_out, P1, Q1, P2, Q2 = model.FaceMorph2D(paras['image_1'], para
 img_out = butterworth_shade(img_out, 1.)
 
 # Show results
-fig=plt.figure(figsize=(15, 5))
-fig.add_subplot(1, 3, 1)
-show_arrows(P1, Q1, 'r')
-show_image(img_1)
-fig.add_subplot(1, 3, 2)
-show_arrows(P2, Q2, 'r')
-show_image(img_2)
-fig.add_subplot(1, 3, 3)
-show_image(img_out)
-plt.show()
+if SHOW_RESULTS:
+    fig=plt.figure(figsize=(15, 5))
+    fig.add_subplot(1, 3, 1)
+    show_arrows(P1, Q1, 'r')
+    show_image(img_1)
+    fig.add_subplot(1, 3, 2)
+    show_arrows(P2, Q2, 'r')
+    show_image(img_2)
+    fig.add_subplot(1, 3, 3)
+    show_image(img_out)
+    plt.show()
 
 # Save image
 if paras['output'] is not None and len(paras['output']) > 0:
