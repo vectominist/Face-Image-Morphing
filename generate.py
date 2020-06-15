@@ -49,8 +49,7 @@ if __name__ == '__main__':
     other_gender_list = gen_rand(DATA_NUM[other_g_idx], 6)
     for i in range(3):
         print(f'test_{i}:')
-        print(f'same_gender: [{same_gender_list[i]}, {same_gender_list[i+1]}, {same_gender_list[i+2]}, 
-            {same_gender_list[i+3]}], other_gender: [{other_gender_list[i]}, {other_gender_list[i+1]}]')
+        print(f'same_gender: [{same_gender_list[i*4]}, {same_gender_list[i*4+1]}, {same_gender_list[i*4+2]}, {same_gender_list[i*4+3]}], other_gender: [{other_gender_list[i*2]}, {other_gender_list[i*2+1]}]')
 
     out_dir = join(out_dir, target.split('/')[-1].split('.')[0])
     os.makedirs(out_dir, exist_ok=True)
