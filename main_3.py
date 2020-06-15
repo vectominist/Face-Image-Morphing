@@ -47,7 +47,7 @@ show_arrows(P3, Q3, 'r')
 show_image(img_3)
 fig.add_subplot(1, 4, 4)
 show_image(img_out)
-plt.show()
+# plt.show()
 
 # Save image
 if paras['output'] is not None and len(paras['output']) > 0:

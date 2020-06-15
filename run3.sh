@@ -3,7 +3,7 @@
 img_1=$1
 img_2=$2
 img_3=$3
-shape_pr=~/Downloads/shape_predictor_68_face_landmarks.dat
+shape_pr=./shape_predictor_68_face_landmarks.dat
 out_path=$4
 name=$5
 save=$6
