@@ -3,8 +3,9 @@ import subprocess
 import sys
 from os.path import join
 import os
+import matplotlib.pyplot as plt
 
-from src.image_lib import read_image, resize, save_image
+from src.image_lib import read_image, resize, save_image, show_image
 
 DATA_NUM = [15, 15] # number of image data (0: male, 1: female)
 IMG_SIZE = 200
@@ -96,3 +97,10 @@ if __name__ == '__main__':
     save_image(join(out_dir, 'test_1.png'), test_1)
     save_image(join(out_dir, 'test_2.png'), test_2)
     save_image(join(out_dir, 'test_3.png'), test_3)
+
+    show_image(test_1)
+    plt.show()
+    show_image(test_2)
+    plt.show()
+    show_image(test_3)
+    plt.show()
