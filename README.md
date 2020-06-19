@@ -2,7 +2,7 @@
 Final project of Interactive Computer Graphics 2020 Spring, NTU CSIE
 
 <p align="center">
-  <img src="example/sample_group.png" width="800" height="250">
+  <img src="example/sample_group.png" width="600" height="188">
 </p>
 
 <p align="center">
@@ -47,7 +47,7 @@ There are three optional parameters: `a`, `b`, and `p`, controlling the weightin
 ## Experiments
 We conducted experiments for verifying whether people are attracted to people who look like them.
 <p align="center">
-  <img src="example/experiment.png" width="915" height="364">
+  <img src="example/experiment.png" width="600" height="239">
 </p>
 
 The `generate.py` generate images for the experiment, it can be used as follow:  
